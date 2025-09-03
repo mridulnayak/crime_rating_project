@@ -49,7 +49,7 @@ def zones():
     return jsonify(get_all_zones())
   except Exception as e:
     return jsonify({"error": str(e)}), 500
-
+  
 @app.route("/crime-info")
 def crime_info():
   lat = request.args.get("lat", type=float)

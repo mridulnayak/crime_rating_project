@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Crimeora: Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Leaflet Styles -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+
+  <!-- App Styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <header aria-label="Crimeora header">
+    <h1>Crimeora: Map</h1>
+  </header>
+
+  <main id="app" aria-label="Crimeora map and controls">
+    <div id="map" aria-label="Crimeora interactive map"></div>
+
+    <!-- Info Box -->
+    <aside id="info-box" class="info-box" aria-live="polite" hidden>
+      <button id="info-close" aria-label="Close details">✕</button>
+      <div id="info-content"></div>
+    </aside>
+
+    <!-- Facility Selector -->
+    <section id="facility-controls" aria-label="Nearby facilities">
+      <label for="facility-type"><b>Nearby Facilities</b></label>
+      <select id="facility-type" title="Choose a facility type">
+        <option value="hospital">Hospitals</option>
+        <option value="police">Police Stations</option>
+        <option value="fire_station">Fire Stations</option>
+        <option value="atm">ATMs</option>
+      </select>
+      <button id="facility-show" onclick="reloadFacilities()" title="Show nearest facility">Show</button>
+    </section>
+
+    <!-- Route Finder -->
+    <section id="route-controls" aria-label="Route finder">
+      <label for="dest-input"><b>Find Route</b></label>
+      <input id="dest-input" type="text" placeholder="Enter destination…" />
+      <button onclick="routeToDestination()">Go</button>
+    </section>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" aria-hidden="true">
+      <div class="spinner" aria-label="Loading"></div>
+      <div class="loading-text">Loading…</div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" aria-live="assertive" aria-atomic="true"></div>
+  </main>
+
+  <!-- Leaflet Scripts -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+
+  <!-- Config -->
+  <script>window.__CRIME_MAP__ = { showZones: true };</script>
+
+  <!-- App Scripts -->
+  <script src="{{ url_for('static', filename='js/map.js') }}"></script>
+</body>
+</html>

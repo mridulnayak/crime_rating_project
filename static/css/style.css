@@ -1,0 +1,381 @@
+:root {
+  --bg-color: #0d0d0d;
+  --text-color: #f5f5f5;
+  --muted-text: #bdbdbd;
+  --accent-color: #ff7043;
+  --accent-strong: #ff5722;
+  --success: #34c759;
+  --warning: #ffa726;
+  --danger: #ef5350;
+
+  --map-border-color: #2a2a2a;
+  --header-bg: linear-gradient(90deg, #151515, #222222);
+  --header-text-color: #ffeb3b;
+
+  --panel-bg: rgba(25, 25, 25, 0.7);
+  --panel-blur: blur(8px);
+
+  --radius-lg: 14px;
+  --radius-md: 10px;
+  --shadow-1: 0 6px 18px rgba(0, 0, 0, 0.35);
+  --shadow-2: 0 10px 28px rgba(0, 0, 0, 0.4);
+
+  --button-bg: #ff7043;
+  --button-hover-bg: #ff5722;
+
+  --focus-ring: 0 0 0 3px rgba(255, 112, 67, 0.35);
+}
+
+/* Base Reset */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* Header */
+header {
+  background: var(--header-bg);
+  color: var(--header-text-color);
+  text-align: center;
+  padding: 1rem 1rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  box-shadow: var(--shadow-1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+header h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  letter-spacing: 0.5px;
+}
+
+/* Layout */
+#app {
+  position: relative;
+}
+
+/* Map */
+#map {
+  height: calc(100vh - 86px); /* header height + spacing */
+  width: min(96vw, 1400px);
+  margin: 14px auto 18px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-2);
+  border: 1px solid var(--map-border-color);
+  overflow: hidden;
+}
+
+/* Info Box */
+.info-box {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 320px;
+  max-width: calc(100vw - 40px);
+  padding: 16px 16px 14px;
+  background: var(--panel-bg);
+  backdrop-filter: var(--panel-blur);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-2);
+  z-index: 1100;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  border-left: 5px solid var(--accent-color);
+  animation: slideIn 0.3s ease-out;
+}
+.info-box h3 {
+  margin: 0 0 6px;
+  color: var(--accent-color);
+  font-size: 1.1rem;
+}
+.info-box p {
+  margin: 4px 0;
+  color: var(--muted-text);
+  font-size: 0.95rem;
+}
+#info-close {
+  float: right;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+  color: #aaa;
+  border-radius: 8px;
+  padding: 2px 6px;
+}
+#info-close:hover { color: #fff; }
+#info-close:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+
+/* Progress bar in info box */
+.bar {
+  width: 100%;
+  background: #2d2d2d;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 10px;
+  margin-top: 8px;
+}
+.bar-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent-strong);
+  transition: width 0.45s ease;
+  border-radius: 8px;
+}
+
+/* Facility Controls */
+#facility-controls {
+  position: absolute;
+  top: 100px;
+  left: 20px;
+  z-index: 1050;
+  background: var(--panel-bg);
+  backdrop-filter: var(--panel-blur);
+  padding: 12px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-2);
+  color: #fff;
+  width: 240px;
+}
+#facility-controls label {
+  display: block;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+#facility-controls select,
+#facility-controls button {
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 10px;
+  background-color: #1f1f1f;
+  color: #fff;
+  box-shadow: var(--shadow-1);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  font-size: 0.95rem;
+}
+#facility-controls select:focus-visible,
+#facility-controls button:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+#facility-controls button {
+  background-color: var(--button-bg);
+  font-weight: 600;
+}
+#facility-controls button:hover {
+  background-color: var(--button-hover-bg);
+  transform: translateY(-1px);
+}
+
+/* Buttons created by Leaflet controls */
+.sos-btn, .traffic-btn {
+  font-size: 14px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-weight: 700;
+  position: fixed;
+  right: 20px;
+  z-index: 1200; /* above info box */
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: var(--shadow-2);
+  transition: transform 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+}
+.sos-btn {
+  bottom: 80px;
+  background: linear-gradient(145deg, #ff3b3b, #b30000);
+  animation: pulse 2.2s ease-in-out infinite;
+}
+.sos-btn:hover { transform: translateY(-2px); }
+.traffic-btn {
+  bottom: 20px;
+  background: linear-gradient(145deg, #444, #2a2a2a);
+}
+.traffic-btn.active {
+  background: linear-gradient(145deg, #2e7d32, #1b5e20);
+}
+
+/* Leaflet Popup */
+.leaflet-popup-content-wrapper {
+  background: #1b1b1b;
+  color: #fff;
+  border-radius: 12px;
+  box-shadow: var(--shadow-1);
+}
+.leaflet-popup-tip { background: #1b1b1b; }
+
+/* Loading overlay */
+#loading-overlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(3px);
+  z-index: 1300;
+}
+#loading-overlay.show { display: flex; }
+.spinner {
+  width: 42px;
+  height: 42px;
+  border: 4px solid rgba(255,255,255,0.2);
+  border-top-color: var(--accent-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+.loading-text {
+  margin-top: 10px;
+  color: #ddd;
+  font-size: 0.95rem;
+}
+
+/* Toasts */
+#toast-container {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  display: grid;
+  gap: 8px;
+  z-index: 1400;
+}
+.toast {
+  background: #222;
+  color: #f5f5f5;
+  padding: 10px 14px;
+  border-radius: 10px;
+  box-shadow: var(--shadow-1);
+  min-width: 220px;
+  max-width: 320px;
+  border-left: 4px solid var(--accent-color);
+  animation: fadeIn 0.2s ease-out;
+}
+.toast.success { border-left-color: var(--success); }
+.toast.warn { border-left-color: var(--warning); }
+.toast.error { border-left-color: var(--danger); }
+
+/* Focus styles */
+button:focus-visible,
+a:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* Animations */
+@keyframes slideIn {
+  from { transform: translateX(20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  #facility-controls {
+    top: auto;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    width: auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+  }
+  #facility-controls label {
+    grid-column: 1 / -1;
+    margin-bottom: 2px;
+  }
+  .info-box {
+    right: 20px;
+    left: 20px;
+    width: auto;
+  }
+}
+@media (max-width: 520px) {
+  .sos-btn { right: 14px; bottom: 74px; }
+  .traffic-btn { right: 14px; bottom: 18px; }
+}
+
+/* Route Controls */
+#route-controls {
+  position: absolute;
+  top: 260px; /* below facilities */
+  left: 20px;
+  z-index: 1050;
+  background: var(--panel-bg);
+  backdrop-filter: var(--panel-blur);
+  padding: 12px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-2);
+  color: #fff;
+  width: 240px;
+}
+#route-controls label {
+  display: block;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+#route-controls input,
+#route-controls button {
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 10px;
+  background-color: #1f1f1f;
+  color: #fff;
+  box-shadow: var(--shadow-1);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  font-size: 0.95rem;
+}
+#route-controls input:focus-visible,
+#route-controls button:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+#route-controls button {
+  background-color: var(--button-bg);
+  font-weight: 600;
+}
+#route-controls button:hover {
+  background-color: var(--button-hover-bg);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 900px) {
+  #route-controls {
+    top: auto;
+    bottom: 100px;
+    left: 20px;
+    right: 20px;
+    width: auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+  }
+  #route-controls label {
+    grid-column: 1 / -1;
+    margin-bottom: 2px;
+  }
+}

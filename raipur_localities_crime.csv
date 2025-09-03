@@ -1,0 +1,7 @@
+locality,district,latitude,longitude,crime_rate_per_100k,total_crimes,safety_level
+Bhatagaon,Raipur,21.216671927952714,81.62502221874644,570,580,Moderate-Low
+Pandri,Raipur,21.2571,81.6356,200,150,High
+Shankar Nagar,Raipur,21.2490,81.6613,350,300,Moderate
+Mujgahan,Raipur,21.159023743879132, 81.66519981982208,100,120,High
+Sejbahar,Raipur,21.195735620279255, 81.64968302038831,200,180,High
+SSIPMT,Raipur,21.136805459852468, 81.6686615307068,10,15,Very High
